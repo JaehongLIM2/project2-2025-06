@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h2 th:text="${board.title}">제목</h2>
+<div>
+    글번호 :
+    <span th:text="${board.id}"></span>
+    작성자 :
+    <span th:text="${board.writer}"></span>
+    작성일 :
+    <span th:text="${board.created}"></span>
+</div>
+<div>
+    조회수:
+    <span th:text="${board.views}"></span>
+</div>
+<div class="mt-4">
+    <a th:href="@{/board/edit(id=${board.id})}" class="btn btn-secondary">수정</a>
+</div>
+<div class="mt-4">
+    <a th:href="@{/board/list}" class="btn btn-secondary">목록으로</a>
+</div>
+
+</body>
+</html>
