@@ -7,9 +7,11 @@ import jakarta.validation.constraints.NotBlank;
 public class BoardForm {
     private Long id;
 
-    @NotBlank
+    @NotBlank(message = "제목은 필수입니다.")
     private String title;
 
     private String content;
+
+    @NotBlank(message = "작성자는 필수입니다.")
     private String writer;
 }

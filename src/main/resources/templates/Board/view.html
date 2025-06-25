@@ -21,6 +21,14 @@
 <div class="mt-4">
     <a th:href="@{/board/edit(id=${board.id})}" class="btn btn-secondary">수정</a>
 </div>
+<div>
+    <form th:action="@{/board/delete}"
+          method="post"
+          onsubmit="return confirm('정말 삭제하시겠습니까?')">
+        <input type="hidden" name="id" th:value="board.id">
+        <button type="submit">삭제</button>
+    </form>
+</div>
 <div class="mt-4">
     <a th:href="@{/board/list}" class="btn btn-secondary">목록으로</a>
 </div>

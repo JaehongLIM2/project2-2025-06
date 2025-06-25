@@ -20,6 +20,7 @@ public class BoardService {
     private final BoardRepository boardRepository;
 
     public void write(BoardForm boardForm) {
+        // boardForm -> 익셉션
         Board board = new Board();
         board.setTitle(boardForm.getTitle());
         board.setContent(boardForm.getContent());
@@ -56,5 +57,9 @@ public class BoardService {
         board.setWriter(form.getWriter());
         // 저장
         boardRepository.save(board);
+    }
+
+    public void delete(Long id) {
+        boardRepository.deleteById(id);
     }
 }

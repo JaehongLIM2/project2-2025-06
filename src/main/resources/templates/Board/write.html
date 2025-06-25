@@ -12,7 +12,7 @@
     <form th:action="@{/board/write}" method="post">
         <div>
             <label for="title">제목</label>
-            <input type="text" id="title" name="title">
+            <input type="text" id="title" name="title" required>
         </div>
         <div>
             <label for="content">내용</label>
@@ -20,7 +20,7 @@
         </div>
         <div>
             <label for="writer">작성자</label>
-            <input type="text" id="writer" name="writer">
+            <input type="text" id="writer" name="writer" required>
         </div>
         <button type="submit">작성</button>
     </form>
