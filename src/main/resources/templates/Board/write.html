@@ -1,29 +1,36 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
-<head>
+<head th:replace="~{layout/main::commonHead('게시글 작성')}">
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
-<h1>게시글 작성</h1>
-<a th:href="@{/board/list}">목록</a>
-<!-- 작성 페이지는 post method 로 작성-->
-<div>
+<nav th:replace="~{layout/main::navbar}"></nav>
+
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2>게시글 작성</h2>
+        <a th:href="@{/board/list}"
+           class="btn btn-secondary">목록</a>
+    </div>
+    <!-- 작성 페이지는 post method 로 작성-->
     <form th:action="@{/board/write}" method="post">
-        <div>
-            <label for="title">제목</label>
-            <input type="text" id="title" name="title" required>
+        <div class="mb-3">
+            <label for="title" class="form-label">제목</label>
+            <input type="text" id="title" name="title" class="form-label" required>
         </div>
-        <div>
-            <label for="content">내용</label>
-            <textarea id="content" name="content" rows="10" cols="50"></textarea>
+        <div class="mb-3">
+            <label for="content" class="form-label">내용</label>
+            <textarea id="content" name="content" class="form-label" rows="10" cols="50"></textarea>
         </div>
-        <div>
-            <label for="writer">작성자</label>
-            <input type="text" id="writer" name="writer" required>
+        <div class="mb-3">
+            <label for="writer" class="form-label">작성자</label>
+            <input type="text" id="writer" class="form-label" name="writer" required>
         </div>
-        <button type="submit">작성</button>
+        <button type="submit" class="btn btn-primary">작성</button>
     </form>
 </div>
+
+<th:block th:replace="~{layout/main::commonScript}"/>
 </body>
 </html>

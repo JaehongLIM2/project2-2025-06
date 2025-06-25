@@ -1,29 +1,42 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
-<head>
+<head th:replace="~{layout/main::commonHead('게시글 수정')}">
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
-<h2>게시글 수정</h2>
-<div>
-    <form th:action="@{/board/edit}" method="post">
-        <input type="hidden" name="id" th:value="${board.id}">
-        <div>
-            <label for="title">제목</label>
-            <input th:value="${board.title}" name="title" id="title" type="text">
+<nav th:replace="~{layout/main::navbar}"></nav>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div>
+                <h2>게시글 수정</h2>
+            </div>
+            <div class="mb-4">
+                <form th:action="@{/board/edit}" method="post">
+                    <input type="hidden" name="id" th:value="${board.id}">
+                    <div class="mb-3">
+                        <label for="title"><strong>제목</strong></label>
+                        <input th:value="${board.title}" name="title" id="title" type="text">
+                    </div>
+                    <div class="mb-3">
+                        <label for="content"><strong>내용</strong></label>
+                        <textarea th:text="${board.content}" name="content" id="content" rows="10" cols="50"
+                                  type="text"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="writer"><strong>작성자</strong></label>
+                        <input th:value="${board.writer}" name="writer" id="writer" type="text">
+                    </div>
+                    <div class="mb-3">
+                        <button type="submit" class="btn btn-primary">수정 완료</button>
+                        <a th:href="@{/board/view(id=${board.id})}" class="btn btn-primary">취소</a>
+                    </div>
+                </form>
+            </div>
         </div>
-        <div>
-            <label for="content">내용</label>
-            <textarea th:text="${board.content}" name="content" id="content" type="text"></textarea>
-        </div>
-        <div>
-            <label for="writer">작성자</label>
-            <input th:value="${board.writer}" name="writer" id="writer" type="text">
-        </div>
-        <button type="submit">수정 완료</button>
-    </form>
-    <a th:href="@{/board/view(id=${board.id})}">취소</a>
+    </div>
 </div>
+<th:block th:replace="~{layout/main::commonScript}"/>
 </body>
 </html>

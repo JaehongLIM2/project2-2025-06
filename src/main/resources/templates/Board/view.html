@@ -1,37 +1,57 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
-<head>
+<head th:replace="~{layout/main::commonHead('게시글 보기')}">
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>게시글 상세</title>
 </head>
+
 <body>
-<h2 th:text="${board.title}">제목</h2>
-<div>
-    글번호 :
-    <span th:text="${board.id}"></span>
-    작성자 :
-    <span th:text="${board.writer}"></span>
-    작성일 :
-    <span th:text="${board.created}"></span>
-</div>
-<div>
-    조회수:
-    <span th:text="${board.views}"></span>
-</div>
-<div class="mt-4">
-    <a th:href="@{/board/edit(id=${board.id})}" class="btn btn-secondary">수정</a>
-</div>
-<div>
-    <form th:action="@{/board/delete}"
-          method="post"
-          onsubmit="return confirm('정말 삭제하시겠습니까?')">
-        <input type="hidden" name="id" th:value="${board.id}">
-        <button type="submit">삭제</button>
-    </form>
-</div>
-<div class="mt-4">
-    <a th:href="@{/board/list}" class="btn btn-secondary">목록으로</a>
+<nav th:replace="~{layout/main::navbar}"></nav>
+
+<div class="container mt-5" th:fragment="content">
+<!--게시글 상세 정보-->
+    <div class="mb-4">
+        <div class="mb-2">
+            <strong>글번호 :</strong>
+            <span th:text="${board.id}"></span>
+        </div>
+        <div class="mb-2">
+            <strong>제목 :</strong>
+            <span th:text="${board.title}"></span>
+        </div>
+        <div class="mb-2">
+            <strong>작성자 :</strong>
+            <span th:text="${board.writer}"></span>
+        </div>
+        <div class="mb-2">
+            <strong>작성일 :</strong>
+            <span th:text="${#temporals.format(board.created, 'yyyy-MM-dd HH:mm')}"></span>
+        </div>
+        <div class="mb-2">
+            <strong>조회수:</strong>
+            <span th:text="${board.views}"></span>
+        </div>
+    </div>
+<!--    내용 영역-->
+    <div class="mb-5">
+        <div>
+            <h5>내용 :</h5>
+            <div class="p-3 border rounded bg-light"  th:text="${board.content}"></div>
+        </div>
+    </div>
+    <div class="mt-4 d-flex gap-2">
+        <a th:href="@{/board/edit(id=${board.id})}" class="btn btn-secondary">수정</a>
+
+        <form th:action="@{/board/delete}" method="post"
+              onsubmit="return confirm('정말 삭제하시겠습니까?')">
+            <input type="hidden" name="id" th:value="${board.id}">
+            <button type="submit" class="btn btn-danger">삭제</button>
+        </form>
+
+        <a th:href="@{/board/list}" class="btn btn-secondary">목록으로</a>
+    </div>
 </div>
 
+<th:block th:replace="~{layout/main::commonScript}"/>
 </body>
 </html>
