@@ -25,7 +25,7 @@
     <form th:action="@{/board/delete}"
           method="post"
           onsubmit="return confirm('정말 삭제하시겠습니까?')">
-        <input type="hidden" name="id" th:value="board.id">
+        <input type="hidden" name="id" th:value="${board.id}">
         <button type="submit">삭제</button>
     </form>
 </div>
