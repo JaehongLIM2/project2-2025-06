@@ -7,6 +7,7 @@ import com.example.prj2.board.Service.BoardService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.expression.AccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -47,9 +48,11 @@ public class BoardController {
     }
 
     @GetMapping("list")
-    public String listBoard(Model model) {
-        List<Board> list = boardService.list();
-        model.addAttribute("boardList", list);
+    public String listBoard(@RequestParam(defaultValue = "0") Integer page,
+                            Model model) {
+
+        Page<Board> boardPage = boardService.list(page);
+        model.addAttribute("boardPage", boardPage);
 
         return "board/list";
     }

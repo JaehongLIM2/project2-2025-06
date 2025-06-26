@@ -12,7 +12,7 @@
             <h2 class="mb-0">회원 목록</h2>
         </div>
         <div>
-            <a th:href="@{/board/list}" class="btn btn-secondary">글 목록</a>
+            <a th:href="@{/board/list}" class="btn btn-secondary">게시글 목록</a>
             <span th:if="${session.loginId == null}">
                 <a th:href="@{/user/signup}" class="btn btn-primary">회원 등록</a>
             </span>

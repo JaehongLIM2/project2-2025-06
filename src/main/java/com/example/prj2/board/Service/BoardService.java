@@ -5,6 +5,9 @@ import com.example.prj2.board.Dto.BoardForm;
 import com.example.prj2.board.Entity.Board;
 import com.example.prj2.board.Repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,8 +32,15 @@ public class BoardService {
         boardRepository.save(board);
     }
 
-    public List<Board> list() {
-        return boardRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
+    public Page<Board> list(Integer page) {
+        // list 주석처리 후 paging
+        Page<Board> boardPage = boardRepository.findAll(PageRequest.of(page, 10,
+                Sort.by(Sort.Direction.DESC, "createdAt").descending()));
+
+        return boardPage;
+
+//        return boardRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
+
     }
 
     public BoardDto view(Long id) {

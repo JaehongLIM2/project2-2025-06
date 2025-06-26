@@ -14,11 +14,11 @@
                 <!-- 왼쪽: 제목 + 작성 버튼 -->
                 <div class="d-flex align-items-center gap-3">
                     <h2 class="mb-0">게시글 목록</h2>
-                    <a th:href="@{/board/write}" class="btn btn-primary">작성</a>
                 </div>
 
                 <!-- 오른쪽: 회원정보 + 로그인 버튼 -->
                 <div class="d-flex align-items-center gap-2">
+                    <a th:href="@{/board/write}" class="btn btn-primary">작성</a>
                     <a th:href="@{/user/list}" class="btn btn-outline-secondary">회원 목록</a>
                 </div>
             </div>
