@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -63,13 +64,29 @@ public class UserController {
 
     @PostMapping("edit")
     public String edit(@ModelAttribute UserForm userForm,
-                       HttpSession session) {
+                       HttpSession session,
+                       RedirectAttributes redirectAttributes,
+                       Model model) {
         String loginId = (String) session.getAttribute("loginId");
+
         if (loginId == null) {
             return "redirect:/user/login";
         }
+
+        // 비밀번호 비교
+        if (!userService.checkPassword(loginId, userForm.getPassword())) {
+            model.addAttribute("errorMessage",
+                    "비밀번호가 일치하지 않습니다.");
+            model.addAttribute("user", userForm);
+            return "user/edit";
+        }
+        // 수정 로직
         userService.edit(loginId, userForm);
-        return "redirect:/board/list";
+        System.out.println("수정완료");
+
+        // addAttribute는 쿼리스트링에 붙이는 역할
+        redirectAttributes.addAttribute("id", loginId);
+        return "redirect:/user/view";
     }
 
     @PostMapping("delete")
@@ -77,7 +94,7 @@ public class UserController {
                          HttpSession session) {
         String loginId = (String) session.getAttribute("loginId");
         userService.delete(userForm, session);
-        
+
         if (loginId == null) {
             return "redirect:/board/list";
 
