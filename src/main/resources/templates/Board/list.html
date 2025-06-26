@@ -34,19 +34,40 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr th:each="list : ${boardList}">
-                            <td th:text="${list.id}">글 번호</td>
+                        <tr th:each="page : ${boardPage.content}">
+                            <td th:text="${page.id}">글 번호</td>
                             <td>
-                                <a th:href="@{/board/view(id=${list.id})}"
-                                   th:text="${list.title}">
+                                <a th:href="@{/board/view(id=${page.id})}"
+                                   th:text="${page.title}">
                                     제목
                                 </a>
                             </td>
-                            <td th:text="${list.writer}">작성자</td>
-                            <td th:text="${#temporals.format(list.created, 'yyyy-MM-dd HH:mm')}">작성일자</td>
+                            <td th:text="${page.writer}">작성자</td>
+                            <td th:text="${#temporals.format(page.created, 'yyyy-MM-dd HH:mm')}">작성일자</td>
                         </tr>
                         </tbody>
                     </table>
+
+                    <!--                    페이징 버튼-->
+                    <div class="d-flex justify-content-center my-4">
+                        <nav>
+                            <ul class="pagination">
+                                <li class="page-item" th:classappend="${boardPage.first} ? 'disabled'">
+                                    <a class="page-link" th:href="@{/board/list(page=${boardPage.number - 1})}">이전</a>
+                                </li>
+
+                                <li class="page-item"
+                                    th:each="i : ${#numbers.sequence(0, boardPage.totalPages - 1)}"
+                                    th:classappend="${i == boardPage.number} ? 'active'">
+                                    <a class="page-link" th:href="@{/board/list(page=${i})}" th:text="${i + 1}">1</a>
+                                </li>
+
+                                <li class="page-item" th:classappend="${boardPage.last} ? 'disabled'">
+                                    <a class="page-link" th:href="@{/board/list(page=${boardPage.number + 1})}">다음</a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
                 </div>
             </div>
         </div>

@@ -52,6 +52,7 @@ public class BoardController {
                             Model model) {
 
         Page<Board> boardPage = boardService.list(page);
+
         model.addAttribute("boardPage", boardPage);
 
         return "board/list";

@@ -35,7 +35,7 @@ public class BoardService {
     public Page<Board> list(Integer page) {
         // list 주석처리 후 paging
         Page<Board> boardPage = boardRepository.findAll(PageRequest.of(page, 10,
-                Sort.by(Sort.Direction.DESC, "createdAt").descending()));
+                Sort.by(Sort.Direction.DESC, "created").descending()));
 
         return boardPage;
 
