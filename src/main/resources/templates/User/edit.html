@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout/main::commonHead('회원정보 수정')}">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<nav th:replace="~{layout/main::navbar}"></nav>
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div>
+                <form th:action="@{/user/edit}" method="post">
+                    <div>
+                        <label for="editNickName">닉네임</label>
+                        <input id="editNickName" name="nickname" class="form-label" type="text">
+                    </div>
+                    <div>
+                        <label for="editEmail">이메일</label>
+                        <input id="editEmail" name="email" class="form-label" type="text">
+                    </div>
+                    <div>
+                        <label for="editPhone">핸드폰</label>
+                        <input id="editPhone" name="phone" class="form-label" type="text">
+                    </div>
+                    <button type="submit">수정</button>
+                    <a th:href="@{/user/view(id=${user.id})}">뒤로가기</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<th:block th:replace="~{layout/main::commonScript}"/>
+</body>
+</html>

@@ -1,0 +1,99 @@
+package com.example.prj2.user.Controller;
+
+import com.example.prj2.board.Dto.BoardForm;
+import com.example.prj2.user.Dto.UserDto;
+import com.example.prj2.user.Dto.UserForm;
+import com.example.prj2.user.Dto.UserListInfo;
+import com.example.prj2.user.Service.UserService;
+import jakarta.servlet.http.HttpSession;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@Controller
+@RequiredArgsConstructor
+@RequestMapping("user")
+public class UserController {
+
+    private final UserService userService;
+
+    @GetMapping("signup")
+    public String signupForm() {
+
+        return "user/signup";
+    }
+
+    @PostMapping("signup")
+    public String signup(UserForm userForm) {
+
+        userService.add(userForm);
+
+        return "redirect:/board/list";
+    }
+
+    @GetMapping("list")
+    public String list(Model model) {
+        List<UserListInfo> list = userService.list();
+        model.addAttribute("userList", list);
+        return "user/list";
+    }
+
+    @GetMapping("view")
+    public String view(String id, Model model) {
+        UserDto user = userService.view(id);
+        model.addAttribute("user", user);
+        return "user/view";
+    }
+
+    @GetMapping("edit")
+    public String edit(HttpSession session, Model model) {
+        String loginId = (String) session.getAttribute("loginId");
+        if (loginId == null) {
+            return "redirect:/user/login";
+        }
+
+        // 유저 정보 조회 후 모델에 추가
+        UserDto user = userService.view(loginId);
+        model.addAttribute("user", user);
+        return "user/edit";
+    }
+
+    @PostMapping("edit")
+    public String edit(@ModelAttribute UserForm userForm,
+                       HttpSession session) {
+        String loginId = (String) session.getAttribute("loginId");
+        if (loginId == null) {
+            return "redirect:/user/login";
+        }
+        userService.edit(loginId, userForm);
+        return "redirect:/board/list";
+    }
+
+
+    @GetMapping("login")
+    public String loginForm() {
+        return "user/login";
+    }
+
+    @PostMapping("login")
+    public String login(@RequestParam String id,
+                        @RequestParam String password,
+                        HttpSession session) {
+        if (userService.login(id, password)) {
+            session.setAttribute("loginId", id);
+            return "redirect:/board/list";
+        }
+
+
+        return "redirect:/user/login?error";
+    }
+
+    @GetMapping("logout")
+    public String logout(HttpSession session) {
+        session.invalidate(); // 세션 완전 삭제
+        return "redirect:/user/login";
+    }
+}
