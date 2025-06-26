@@ -24,16 +24,22 @@ public class BoardController {
     private final BoardService boardService;
 
     @GetMapping("write")
-    public String writeBoard() {
+    public String writeBoard(Model model) {
+        model.addAttribute("boardForm", new BoardForm());
         return "board/write";
     }
 
     @PostMapping("write")
     public String write(@Valid @ModelAttribute("boardForm") BoardForm boardForm,
-                        BindingResult bindingResult) {
+                        BindingResult bindingResult,
+                        HttpSession session) {
+        String loginId = (String) session.getAttribute("loginId");
+
         if (bindingResult.hasErrors()) {
             return "board/write";
         }
+        // 작성자 설정
+        boardForm.setWriter(loginId);
 
         boardService.write(boardForm);
         return "redirect:/board/list";

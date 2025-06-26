@@ -12,10 +12,10 @@ public class UserForm {
     @NotBlank(message = "비밀번호 필수입니다.")
     private String password;
 
-    private String email;
-
     @NotBlank(message = "별명은 필수입니다.")
     private String nickname;
+
+    private String email;
 
     private String phone;
 }

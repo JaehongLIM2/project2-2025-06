@@ -38,11 +38,14 @@
                 <div class="mb-5">
                     <div>
                         <h5>내용 :</h5>
-                        <div class="p-3 border rounded bg-light" th:text="${board.content}"></div>
+                        <div class="p-3 border rounded bg-light" style="white-space: pre-wrap; min-height: 200px;"
+                             th:text="${board.content}"></div>
                     </div>
                 </div>
-                <div class="mt-4 d-flex gap-2">
-                    <div th:if="${session.loginId == board.writer}">
+
+                <div class="mt-4 d-flex justify-content-between">
+                    <!-- 왼쪽: 수정/삭제 -->
+                    <div th:if="${session.loginId == board.writer}" class="d-flex gap-2">
                         <a th:href="@{/board/edit(id=${board.id})}" class="btn btn-secondary">수정</a>
 
                         <form th:action="@{/board/delete}" method="post"
@@ -51,7 +54,10 @@
                             <button type="submit" class="btn btn-danger">삭제</button>
                         </form>
                     </div>
-                    <a th:href="@{/board/list}" class="btn btn-secondary">목록으로</a>
+                    <!-- 오른쪽: 목록으로 -->
+                    <div>
+                        <a th:href="@{/board/list}" class="btn btn-secondary">목록으로</a>
+                    </div>
                 </div>
             </div>
         </div>

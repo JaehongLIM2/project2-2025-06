@@ -10,6 +10,6 @@ import java.io.Serializable;
 @Value
 public class UserDto implements Serializable {
     String id;
-    String email;
     String nickname;
+    String email;
 }
