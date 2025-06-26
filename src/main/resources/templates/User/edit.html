@@ -12,43 +12,54 @@
         <div class="col-md-8">
 
             <div>
-                <form th:action="@{/user/edit}" method="post">
+                <form th:action="@{/user/edit}" method="post"
+                      onsubmit="return confirm('정말 수정하시겠습니까?')">
                     <div>
                         <label for="editNickName" class="form-label">닉네임</label>
-                        <input id="editNickName" name="nickname" class="form-control" type="text">
+                        <input id="editNickName" name="nickname" th:value="${user.email}"
+                               class="form-control" type="text">
                     </div>
                     <div>
                         <label for="editEmail" class="form-label">이메일</label>
-                        <input id="editEmail" name="email" class="form-control" type="text">
+                        <input id="editEmail" name="email" th:value="${user.nickname}"
+                               class="form-control" type="text">
                     </div>
                     <div>
                         <label for="editPhone" class="form-label">핸드폰</label>
-                        <input id="editPhone" name="phone" class="form-control" type="text">
+                        <input id="editPhone" name="phone" th:value="${user.phone}"
+                               class="form-control" type="text">
                     </div>
 
                     <!--버튼들-->
-                    
+
                     <div class="mt-3 d-flex justify-content-between">
                         <div class="d-flex gap-2">
                             <button type="submit" class="btn btn-primary">수정</button>
+                            <button type="button" onclick="confirmDelete()"
+                                    class="btn btn-danger">회원탈퇴
+                            </button>
                         </div>
                         <div>
                             <a th:href="@{/user/view(id=${user.id})}" class="btn btn-secondary">뒤로가기</a>
                         </div>
                     </div>
                 </form>
-                <!--삭제버튼 추가-->
-                <form th:action="@{/user/delete}" method="post"
-                      onsubmit="return confirm('정말 탈퇴하시겠습니까?')"
-                      class="d-inline">
+                <!--실제 탈퇴 기능 추가-->
+                <form id="deleteForm" th:action="@{/user/delete}" method="post" style="display: none;">
                     <input type="hidden" name="id" th:value="${user.id}">
-                    <button type="submit" class="btn btn-danger">회원탈퇴</button>
                 </form>
             </div>
         </div>
     </div>
 </div>
-
+<!--JS 스크립트-->
+<script>
+    function confirmDelete() {
+        if (confirm("정말 탈퇴하시겠습니까?")) {
+            document.getElementById("deleteForm").submit();
+        }
+    }
+</script>
 
 <th:block th:replace="~{layout/main::commonScript}"/>
 </body>

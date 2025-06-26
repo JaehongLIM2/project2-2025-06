@@ -1,5 +1,6 @@
 package com.example.prj2.board.Entity;
 
+import com.example.prj2.user.Entity.User;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,7 +23,9 @@ public class Board {
 
     private String content;
 
-    private String writer;
+    @ManyToOne
+    @JoinColumn(name = "writer")
+    private User writer;
 
     @Column(name = "created", insertable = false, updatable = false)
     private LocalDateTime created;

@@ -4,6 +4,8 @@ import com.example.prj2.board.Dto.BoardDto;
 import com.example.prj2.board.Dto.BoardForm;
 import com.example.prj2.board.Entity.Board;
 import com.example.prj2.board.Repository.BoardRepository;
+import com.example.prj2.user.Entity.User;
+import com.example.prj2.user.Repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -22,13 +24,17 @@ public class BoardService {
 
 
     private final BoardRepository boardRepository;
+    private final UserRepository userRepository;
 
     public void write(BoardForm boardForm) {
+        // 작성자 ID(String) → User 객체로 변환
+        User writer = userRepository.findById(boardForm.getWriter())
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 사용자"));
         // boardForm -> 익셉션
         Board board = new Board();
         board.setTitle(boardForm.getTitle());
         board.setContent(boardForm.getContent());
-        board.setWriter(boardForm.getWriter());
+        board.setWriter(writer);
         boardRepository.save(board);
     }
 
@@ -50,7 +56,7 @@ public class BoardService {
                 board.getId(),
                 board.getTitle(),
                 board.getContent(),
-                board.getWriter(),
+                board.getWriter().getNickname(),
                 board.getCreated(),
                 board.getViews()
         );

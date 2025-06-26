@@ -13,6 +13,34 @@
 
 <!-- 네비게이션 -->
 <nav th:fragment="navbar">
+    <!--   현재 시간-->
+    <div class="ms-auto me-3">
+        <div class="card shadow-sm px-3 py-1">
+            <div class="card-body p-1 text-center">현재 시간 :
+                <small id="currentTime" class="text-muted">--:--:--</small>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function updateKSTClock() {
+            const now = new Date();
+
+            const year = now.getFullYear();
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const day = String(now.getDate()).padStart(2, '0');
+            const hour = String(now.getHours()).padStart(2, '0');
+            const minute = String(now.getMinutes()).padStart(2, '0');
+            const second = String(now.getSeconds()).padStart(2, '0');
+
+            const formatted = `${year}-${month}-${day} ${hour}:${minute}:${second}`;
+            document.getElementById('currentTime').textContent = formatted;
+        }
+
+        setInterval(updateKSTClock, 1000);
+        updateKSTClock(); // 최초 1회 실행
+    </script>
+
     <!-- 여기 안에 Bootstrap 네비게이션 복붙 가능 -->
     <div class="container-fluid d-flex justify-content-end">
         <div class="me-3 mt-2">
@@ -26,6 +54,7 @@
             </span>
         </div>
     </div>
+
 </nav>
 
 

@@ -8,7 +8,7 @@ import lombok.ToString;
 @Entity
 @Getter
 @Setter
-@ToString
+@ToString(of = {"id", "email", "nickname", "phone"})
 @Table(name = "user")
 public class User {
 

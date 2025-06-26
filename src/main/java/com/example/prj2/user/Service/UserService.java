@@ -5,6 +5,7 @@ import com.example.prj2.user.Dto.UserForm;
 import com.example.prj2.user.Dto.UserListInfo;
 import com.example.prj2.user.Entity.User;
 import com.example.prj2.user.Repository.UserRepository;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -61,6 +62,11 @@ public class UserService {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("해당 ID의 사용자가 없습니다: " + id));
 
-        return new UserDto(user.getId(), user.getNickname(), user.getEmail());
+        return new UserDto(user.getId(), user.getNickname(), user.getEmail(), user.getPhone());
+    }
+
+    public void delete(UserForm userForm, HttpSession session) {
+        userRepository.deleteById(userForm.getId());
+        session.removeAttribute("loginId");
     }
 }

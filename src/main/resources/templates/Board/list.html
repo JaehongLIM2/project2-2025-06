@@ -18,7 +18,9 @@
 
                 <!-- 오른쪽: 회원정보 + 로그인 버튼 -->
                 <div class="d-flex align-items-center gap-2">
-                    <a th:href="@{/board/write}" class="btn btn-primary">작성</a>
+                    <div th:if="${session.loginId != null}">
+                        <a th:href="@{/board/write}" class="btn btn-primary">작성</a>
+                    </div>
                     <a th:href="@{/user/list}" class="btn btn-outline-secondary">회원 목록</a>
                 </div>
             </div>
@@ -42,7 +44,7 @@
                                     제목
                                 </a>
                             </td>
-                            <td th:text="${page.writer}">작성자</td>
+                            <td th:text="${page.writer.nickname}">작성자</td>
                             <td th:text="${#temporals.format(page.created, 'yyyy-MM-dd HH:mm')}">작성일자</td>
                         </tr>
                         </tbody>

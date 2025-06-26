@@ -72,6 +72,19 @@ public class UserController {
         return "redirect:/board/list";
     }
 
+    @PostMapping("delete")
+    public String delete(@ModelAttribute UserForm userForm,
+                         HttpSession session) {
+        String loginId = (String) session.getAttribute("loginId");
+        userService.delete(userForm, session);
+        
+        if (loginId == null) {
+            return "redirect:/board/list";
+
+        }
+        return "redirect:/user/login";
+    }
+
 
     @GetMapping("login")
     public String loginForm() {

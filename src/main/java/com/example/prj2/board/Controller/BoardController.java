@@ -33,18 +33,25 @@ public class BoardController {
     @PostMapping("write")
     public String write(@Valid @ModelAttribute("boardForm") BoardForm boardForm,
                         BindingResult bindingResult,
-                        HttpSession session) {
+                        HttpSession session, Model model) {
         String loginId = (String) session.getAttribute("loginId");
 
         if (bindingResult.hasErrors()) {
             return "board/write";
+        }
+        // 만약 로그인 되지않았을때
+        if (loginId == null) {
+            model.addAttribute("alertMessage",
+                    "로그인 후 작성할 수 있습니다.");
+            model.addAttribute("redirectUrl",
+                    "/user/login");
+            return "common/alert";
         }
         // 작성자 설정
         boardForm.setWriter(loginId);
 
         boardService.write(boardForm);
         return "redirect:/board/list";
-        // 익셉션 발생하면 얼랏 생성
     }
 
     @GetMapping("list")

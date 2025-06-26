@@ -34,5 +34,6 @@ CREATE TABLE user
 DROP TABLE user;
 
 ALTER TABLE board
-    ADD FOREIGN KEY (writer) REFERENCES user (id);
+    ADD FOREIGN KEY (writer) REFERENCES user (id)
+        ON DELETE CASCADE;
 
