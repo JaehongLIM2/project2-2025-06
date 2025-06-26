@@ -75,9 +75,8 @@ public class UserController {
 
         // 비밀번호 비교
         if (!userService.checkPassword(loginId, userForm.getPassword())) {
-            model.addAttribute("errorMessage",
+            model.addAttribute("message",
                     "비밀번호가 일치하지 않습니다.");
-            redirectAttributes.addFlashAttribute("message", "비밀번호가 일치하지 않습니다.");
             model.addAttribute("user", userForm);
             return "user/edit";
         }

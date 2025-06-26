@@ -8,6 +8,13 @@
 <nav th:replace="~{layout/main::navbar}"></nav>
 
 <div class="container mt-5">
+
+    <!--만약 비밀번호 일치 하지 않았을시 메세지 출력-->
+    <div th:if="${message}" class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
+        <span th:text="${message}"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    
     <div class="row justify-content-center">
         <div class="col-md-8">
 
