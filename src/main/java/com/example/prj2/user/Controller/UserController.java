@@ -77,12 +77,16 @@ public class UserController {
         if (!userService.checkPassword(loginId, userForm.getPassword())) {
             model.addAttribute("errorMessage",
                     "비밀번호가 일치하지 않습니다.");
+            redirectAttributes.addFlashAttribute("message", "비밀번호가 일치하지 않습니다.");
             model.addAttribute("user", userForm);
             return "user/edit";
         }
         // 수정 로직
         userService.edit(loginId, userForm);
         System.out.println("수정완료");
+
+        // addFlashAttribute()는 임시 데이터 전달(세션 1회용 메세지)
+        redirectAttributes.addFlashAttribute("message", "회원정보가 변경되었습니다.");
 
         // addAttribute는 쿼리스트링에 붙이는 역할
         redirectAttributes.addAttribute("id", loginId);
