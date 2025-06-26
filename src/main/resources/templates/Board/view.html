@@ -42,14 +42,15 @@
                     </div>
                 </div>
                 <div class="mt-4 d-flex gap-2">
-                    <a th:href="@{/board/edit(id=${board.id})}" class="btn btn-secondary">수정</a>
+                    <div th:if="${session.loginId == board.writer}">
+                        <a th:href="@{/board/edit(id=${board.id})}" class="btn btn-secondary">수정</a>
 
-                    <form th:action="@{/board/delete}" method="post"
-                          onsubmit="return confirm('정말 삭제하시겠습니까?')">
-                        <input type="hidden" name="id" th:value="${board.id}">
-                        <button type="submit" class="btn btn-danger">삭제</button>
-                    </form>
-
+                        <form th:action="@{/board/delete}" method="post"
+                              onsubmit="return confirm('정말 삭제하시겠습니까?')">
+                            <input type="hidden" name="id" th:value="${board.id}">
+                            <button type="submit" class="btn btn-danger">삭제</button>
+                        </form>
+                    </div>
                     <a th:href="@{/board/list}" class="btn btn-secondary">목록으로</a>
                 </div>
             </div>
