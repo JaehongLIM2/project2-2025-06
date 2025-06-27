@@ -56,7 +56,7 @@ public class BoardService {
                 board.getId(),
                 board.getTitle(),
                 board.getContent(),
-                board.getWriter().getNickname(),
+                board.getWriter().getId(),
                 board.getCreated(),
                 board.getViews()
         );
@@ -92,4 +92,6 @@ public class BoardService {
         boardRepository.deleteById(id);
 
     }
+
+
 }

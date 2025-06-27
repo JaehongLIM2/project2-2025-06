@@ -12,8 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -26,13 +25,21 @@ public class UserService {
 
     private final UserRepository userRepository;
 
-    public void add(UserForm userForm) {
+    public void add(UserForm userForm, MultipartFile profileImage) {
         User user = new User();
         user.setId(userForm.getId());
         user.setPassword(userForm.getPassword());
         user.setEmail(userForm.getEmail());
         user.setNickname(userForm.getNickname());
         user.setPhone(userForm.getPhone());
+
+        // 이미지 입력
+        if (!profileImage.isEmpty()) {
+            validateImage(profileImage);
+            String profileImagePath = editUsersImage(profileImage);
+            user.setProfileImage(profileImagePath);
+        }
+
         userRepository.save(user);
     }
 
@@ -89,6 +96,7 @@ public class UserService {
     public void delete(UserForm userForm, HttpSession session) {
         userRepository.deleteById(userForm.getId());
         session.removeAttribute("loginId");
+//        SADSD
     }
 
     public boolean checkPassword(String loginId,
@@ -109,21 +117,37 @@ public class UserService {
         //                      중복되면 안되는 것에 사용되는 랜덤 메소드
         String profileImageName = UUID.randomUUID() + "_" + profileImage.getOriginalFilename();
         // 2. 저장 경로
-        String profileImageDirPath = System.getProperty("user.home") + "\\IdeaProjects\\prj2\\image\\";
+        String profileImageDirPath = System.getProperty("user.home") + "\\IdeaProjects\\prj2\\image\\profile\\";
         try {
             // 2-1. 폴더가 없으면 생성
             File imageDir = new File(profileImageDirPath);
             if (!imageDir.exists()) {
                 imageDir.mkdirs();
             }
-            // 3. 파일 저장
             File destFile = new File(profileImageDirPath, profileImageName);
-            profileImage.transferTo(destFile);
+
+            try (InputStream is = profileImage.getInputStream();
+                 OutputStream os = new FileOutputStream(destFile)) {
+
+                byte[] buffer = new byte[1024];
+                int bytesRead;
+                while ((bytesRead = is.read(buffer)) != -1) {
+                    os.write(buffer, 0, bytesRead);
+                }
+            }
+
+//            // 3. 파일 저장
+//            File destFile = new File(profileImageDirPath, profileImageName);
+//            profileImage.transferTo(destFile);
             // 4. DB에서 가져올 경로
             return "/images/profile/" + profileImageName;
 
         } catch (IOException e) {
             throw new RuntimeException("프로필 이미지 업로드 실패", e);
         }
+    }
+
+    public User findById(String loginId) {
+        return userRepository.findById(loginId).orElse(null);
     }
 }

@@ -29,9 +29,17 @@ public class UserController {
     }
 
     @PostMapping("signup")
-    public String signup(UserForm userForm) {
+    public String signup(UserForm userForm,
+                         @RequestParam("profileImage") MultipartFile profileImage) {
 
-        userService.add(userForm);
+        if (profileImage == null || profileImage.isEmpty()) {
+            throw new IllegalStateException("업로드된 파일이 없습니다.");
+        }
+
+        // 프로필 사진 받기
+        userService.editUsersImage(profileImage);
+
+        userService.add(userForm, profileImage);
 
         return "redirect:/board/list";
     }
@@ -93,7 +101,6 @@ public class UserController {
         }
         // 수정 로직
         userService.edit(loginId, userForm, profileImage);
-        System.out.println("수정완료");
 
         // addFlashAttribute()는 임시 데이터 전달(세션 1회용 메세지)
         redirectAttributes.addFlashAttribute("message", "회원정보가 변경되었습니다.");
@@ -101,7 +108,7 @@ public class UserController {
         // addAttribute는 쿼리스트링에 붙이는 역할
         redirectAttributes.addAttribute("id", loginId);
         return "redirect:/user/view";
-        
+
     }
 
     @PostMapping("delete")

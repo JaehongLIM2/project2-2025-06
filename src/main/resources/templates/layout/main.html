@@ -45,6 +45,10 @@
     <div class="container-fluid d-flex justify-content-end">
         <div class="me-3 mt-2">
             <span th:if="${session.loginId != null}">
+                <img th:src="@{${user.profileImage}}"
+                     alt="프로필 이미지"
+                     class="rounded-circle"
+                     style="width: 50px; height: 50px; object-fit: cover;">
                 <strong th:text="${session.loginId}"></strong> 님 |
                 <a th:href="@{/user/view(id=${session.loginId})}" class="btn btn-success btn-sm">회원정보</a>
                 <a th:href="@{/user/logout}" class="btn btn-outline-danger btn-sm">로그아웃</a>

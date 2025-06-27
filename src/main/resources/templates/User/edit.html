@@ -25,23 +25,24 @@
                     <div>
                         <input type="hidden" name="id" th:value="${user.id}">
                     </div>
-                    <div>
+                    <div class="mt-3">
                         <label for="editNickName" class="form-label">닉네임</label>
                         <input id="editNickName" name="nickname" th:value="${user.nickname}"
                                class="form-control" type="text">
                     </div>
-                    <div>
+                    <div class="mt-3">
                         <label for="editEmail" class="form-label">이메일</label>
                         <input id="editEmail" name="email" th:value="${user.email}"
                                class="form-control" type="text">
                     </div>
-                    <div>
+                    <div class="mt-3">
                         <label for="editPhone" class="form-label">핸드폰</label>
                         <input id="editPhone" name="phone" th:value="${user.phone}"
                                class="form-control" type="text">
                     </div>
-                    <div>
-                        <input type="file" name="profileImage">
+                    <div class="mt-3">
+                        <label for="editProfilePhoto" class="form-label" style="display: block;">프로필 사진</label>
+                        <input id="editProfilePhoto" type="file" name="profileImage">
                     </div>
 
                     <!-- ✅ 비밀번호 확인 필드 추가 -->
@@ -52,7 +53,7 @@
 
                     <!--버튼들-->
 
-                    <div class="mt-3 d-flex justify-content-between">
+                    <div class="mt-5 d-flex justify-content-between">
                         <div class="d-flex gap-2">
                             <button type="submit" class="btn btn-primary">수정</button>
                             <button type="button" onclick="confirmDelete()"
