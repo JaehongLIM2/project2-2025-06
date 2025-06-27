@@ -37,3 +37,6 @@ ALTER TABLE board
     ADD FOREIGN KEY (writer) REFERENCES user (id)
         ON DELETE CASCADE;
 
+# 이미지 컬럼 추가
+ALTER TABLE user
+    ADD COLUMN profile_image VARCHAR(255);

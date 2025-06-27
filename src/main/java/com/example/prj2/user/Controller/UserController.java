@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
@@ -64,14 +65,20 @@ public class UserController {
 
     @PostMapping("edit")
     public String edit(@ModelAttribute UserForm userForm,
+                       @RequestParam("profileImage") MultipartFile profileImage,
                        HttpSession session,
                        RedirectAttributes redirectAttributes,
                        Model model) {
+
+        // 로그인 세션 구분
         String loginId = (String) session.getAttribute("loginId");
 
         if (loginId == null) {
             return "redirect:/user/login";
         }
+
+        // 프로필 사진 받기
+        userService.editUsersImage(profileImage);
 
         // 비밀번호 비교
         if (!userService.checkPassword(loginId, userForm.getPassword())) {
@@ -81,7 +88,7 @@ public class UserController {
             return "user/edit";
         }
         // 수정 로직
-        userService.edit(loginId, userForm);
+        userService.edit(loginId, userForm, profileImage);
         System.out.println("수정완료");
 
         // addFlashAttribute()는 임시 데이터 전달(세션 1회용 메세지)

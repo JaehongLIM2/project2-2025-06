@@ -2,6 +2,7 @@ package com.example.prj2.user.Dto;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
+import org.springframework.web.multipart.MultipartFile;
 
 @Data
 public class UserForm {
@@ -18,4 +19,6 @@ public class UserForm {
     private String email;
 
     private String phone;
+
+    private MultipartFile profileImage;
 }

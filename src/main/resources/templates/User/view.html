@@ -40,6 +40,12 @@
                             <span th:text="${user.email}"></span>
                         </div>
                     </div>
+                    <div class="mb-3 text-center">
+                        <img th:src="@{${user.profileImage}}"
+                             alt="프로필 이미지"
+                             class="rounded-circle"
+                             style="width: 150px; height: 150px; object-fit: cover;">
+                    </div>
                     <div th:if="${session.loginId == user.id}">
                         <a th:href="@{/user/edit(id=${user.id})}"
                            class="btn btn-primary">수정
