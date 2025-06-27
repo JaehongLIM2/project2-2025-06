@@ -73,7 +73,6 @@ public class UserController {
 
     @PostMapping("edit")
     public String edit(@ModelAttribute UserForm userForm,
-                       @RequestParam("profileImage") MultipartFile profileImage,
                        HttpSession session,
                        RedirectAttributes redirectAttributes,
                        Model model) {
@@ -84,6 +83,8 @@ public class UserController {
         if (loginId == null) {
             return "redirect:/user/login";
         }
+
+        MultipartFile profileImage = userForm.getProfileImage();
 
         if (profileImage == null || profileImage.isEmpty()) {
             throw new IllegalStateException("업로드된 파일이 없습니다.");

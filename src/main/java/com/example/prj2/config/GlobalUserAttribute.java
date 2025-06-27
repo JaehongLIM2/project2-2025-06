@@ -15,7 +15,7 @@ public class GlobalUserAttribute {
         this.userService = userService;
     }
 
-    @ModelAttribute("user")
+    @ModelAttribute("loginUser")
     public User user(HttpSession session) {
         String loginId = (String) session.getAttribute("loginId");
         if (loginId != null) {

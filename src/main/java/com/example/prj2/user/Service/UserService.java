@@ -66,6 +66,9 @@ public class UserService {
             validateImage(profileImage);
             String profileImagePath = editUsersImage(profileImage);
             user.setProfileImage(profileImagePath);
+        } else {
+            // 👇 기존 이미지 유지 (form에 안 들어오는 경우 대비)
+            user.setProfileImage(user.getProfileImage());
         }
 
 
@@ -110,6 +113,7 @@ public class UserService {
     }
 
     public String editUsersImage(MultipartFile profileImage) {
+        
         // 프로필 사진 업로드 메소드
 
         // 1. 파일 이름 설정
@@ -118,6 +122,7 @@ public class UserService {
         String profileImageName = UUID.randomUUID() + "_" + profileImage.getOriginalFilename();
         // 2. 저장 경로
         String profileImageDirPath = System.getProperty("user.home") + "\\IdeaProjects\\prj2\\image\\profile\\";
+
         try {
             // 2-1. 폴더가 없으면 생성
             File imageDir = new File(profileImageDirPath);

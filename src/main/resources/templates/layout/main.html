@@ -45,7 +45,8 @@
     <div class="container-fluid d-flex justify-content-end">
         <div class="me-3 mt-2">
             <span th:if="${session.loginId != null}">
-                <img th:src="@{${user.profileImage}}"
+                <img th:if="${loginUser != null}"
+                     th:src="@{${loginUser.profileImage}}"
                      alt="프로필 이미지"
                      class="rounded-circle"
                      style="width: 50px; height: 50px; object-fit: cover;">
