@@ -77,6 +77,10 @@ public class UserController {
             return "redirect:/user/login";
         }
 
+        if (profileImage == null || profileImage.isEmpty()) {
+            throw new IllegalStateException("업로드된 파일이 없습니다.");
+        }
+
         // 프로필 사진 받기
         userService.editUsersImage(profileImage);
 
@@ -97,6 +101,7 @@ public class UserController {
         // addAttribute는 쿼리스트링에 붙이는 역할
         redirectAttributes.addAttribute("id", loginId);
         return "redirect:/user/view";
+        
     }
 
     @PostMapping("delete")
